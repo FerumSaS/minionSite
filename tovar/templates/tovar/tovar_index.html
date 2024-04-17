@@ -1,0 +1,74 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'main/css/cartochka_tovara.css' %}">
+{% endblock %}
+{% block pagecontent %}
+<div>
+    <div class="main_content">
+        <a href="{% url 'search' %}">
+            <button class="back_button">Назад</button>
+        </a>
+        <div class="main_tovar">
+
+            <div class="name_and_photo">
+                <div class="photos">
+                    <div class="main_photo">
+                        <img class="product-main-image" src="{{ tovar.cover.url }}" alt="{{ tovar.title }}"/>
+                    </div>
+                    <div class="not_main_photo">
+                        {% for image in tovar.images.all %}
+                            <img class="product-additional-image" src="{{ image.image.url }}" alt="{{ tovar.title }}"/>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="name_and_opis">
+                    <div class="tovar_name">
+                        <h1>{{ tovar.title }}</h1>
+                    </div>
+                    <div class="tovar_opis">
+                        <h4>{{ tovar.short_description }}</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tovar_opisanie">
+                <div class="opisanie_blok">
+                    <h1 class="text_opisanie_main">Описание</h1>
+                </div>
+
+                <div class="opisanie">
+                    <h4 class="text_opisanie">{{ tovar.description | linebreaksbr }}</h4>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <img class="modal-image" alt="">
+         </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const galleryImages = document.querySelectorAll('.product-main-image, .product-additional-image');
+          const modal = document.querySelector('.modal');
+          const modalImage = document.querySelector('.modal-image');
+          const modalClose = document.querySelector('.modal-close');
+
+          galleryImages.forEach(function(image) {
+            image.addEventListener('click', function() {
+              const imageURL = this.getAttribute('src');
+              modalImage.setAttribute('src', imageURL);
+              modal.style.display = 'flex';
+            });
+          });
+
+          modalClose.addEventListener('click', function() {
+            modal.style.display = 'none';
+          });
+        });
+    </script>
+{% endblock %}

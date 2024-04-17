@@ -1,0 +1,100 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'main/css/cartochka_tovara.css' %}">
+{% endblock %}
+
+{% block pagecontent %}
+    <form id="search-form" action="{% url 'search' %}" method="GET">
+        <div class="upper_photo">
+            <img src="{% static 'main/img/Rectangle 137.png' %}" alt="upper_photo">
+        </div>
+        <div class="container">
+            <div class="tovarsearch_list">
+                <div class="categories" style="display: block;">
+                    <h1>Категории</h1>
+                        <div class="tag_search_button">
+                            <label>
+                                <input type="text" placeholder="Поиск" class="search-input-categories" name="search_tags" value="{{ request.GET.search_tags }}">
+                            </label>
+                            <button type="submit" class="search-button">
+                                <img src="{% static 'main/img/lupa.png' %}" alt="Поиск">
+                            </button>
+                        </div>
+                    <ul class="tagsUL">
+                        {% for tag in all_tags %}
+                            <li class="tag_in_list">
+                                <label>
+                                    <input type="checkbox" name="tags" value="{{ tag.name }}" {% if tag.name in selected_tags %}checked{% endif %}>
+                                </label>
+                                <label>{{ tag.name }}</label>
+                            </li>
+                        {% empty %}
+                            <li>No tags found.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <button class="mobile-categories-button" type="button" onclick="toggleMobileCategories()">
+                    <div class="vertical-center">
+                        <span class="text-to-scroll">Выбрать категорию</span>
+                    </div>
+                </button>
+                <div class="products">
+                    <table>
+                        <tbody class="tovar_body">
+                            {% for tovar in tovars %}
+                                <tr>
+                                    <td>
+                                        <div class="product">
+                                            <img src="{{ tovar.cover.url }}" alt="{{ tovar.title }}">
+                                            <h3 class="tovar_name">{{ tovar.title }}</h3>
+                                            <a class="details" href="{% url 'tovar-detail' pk=tovar.pk %}">Подробнее</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        const checkboxes = document.querySelectorAll('input[type="checkbox"][name="tags"]');
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener('change', () => {
+                document.getElementById('search-form').submit();
+            });
+        });
+
+        function toggleMobileCategories() {
+            const categories = document.querySelector('.categories');
+            categories.style.display = categories.style.display === 'block' ? 'none' : 'block';
+        }
+        const textContainer = document.querySelector('.text-to-scroll');
+
+        function updateTextPosition() {
+            const scrollY = window.scrollY || window.pageYOffset;
+            const centerY = window.innerHeight / 8;
+            const textHeight = textContainer.offsetHeight;
+            const screenCenterY = centerY + scrollY; // Центр экрана, учитывая прокрутку
+
+            // Вычисляем вертикальное положение текста относительно центра экрана
+            const textY = screenCenterY - (textHeight / 2);
+
+            textContainer.style.top = `${textY}px`;
+        }
+
+
+        // Обновляем положение текста при загрузке страницы, при прокрутке и при изменении размеров окна
+        window.addEventListener('load', updateTextPosition);
+        window.addEventListener('scroll', updateTextPosition);
+        window.addEventListener('resize', updateTextPosition);
+
+        // Вызываем функцию в начале, чтобы текст сразу отобразился по центру
+        updateTextPosition();
+
+    </script>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'main/css/carusel.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/cartochka_tovara.css' %}">
+
+    <script src="{% static 'main/js/carusel.js' %}"></script>
+{% endblock %}
+
+{% block title %}Главная{% endblock %}
+
+{% block pagecontent %}
+    <div class="main_page">
+
+    <div class="main_photo_karusel">
+    <main>
+      <section class="has-dflex-center">
+        <div class="lx-container-80">
+          <div class="lx-row">
+            <div class="lx-card carousel-container">
+                {% for photo in main_carusel %}
+                  <div class="item fade">
+                    <div class="image">
+                        <img src="{{ photo.photo.url }}" alt=""/>
+                    </div>
+                  </div>
+                {% endfor %}
+                <a class="prev has-dflex-center"><i class="fas fa-angle-left"><</i></a><a class="next has-dflex-center"><i class="fas fa-angle-right">></i></a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    </div>
+
+        <div class="popular_tovar">
+            <h1 class="main_text">Популярные</h1>
+            <table>
+                <tbody class="tovar_body">
+                    {% for tovar in tovars_popular %}
+                        <tr>
+                            <td>
+                                <div class="product">
+                                    <img src="{{ tovar.cover.url }}" alt="{{ tovar.title }}">
+                                    <h3 class="tovar_name">{{ tovar.title }}</h3>
+                                    <a class="details" href="{% url 'tovar-detail' pk=tovar.pk %}">Подробнее</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="main_photo_index">
+            <img class="main_photo_family" src="{% static 'main/img/mainphoto.png' %}" alt="logo">
+        </div>
+
+        <div class="collection_tovar">
+             <table>
+             <h1 class="main_text">Коллекционные</h1>
+                <tbody class="tovar_body">
+                    {% for tovar in tovars_collection %}
+                        <tr>
+                            <td>
+                                <div class="product">
+                                    <img src="{{ tovar.cover.url }}" alt="{{ tovar.title }}">
+                                    <h3 class="tovar_name">{{ tovar.title }}</h3>
+                                    <a class="details" href="{% url 'tovar-detail' pk=tovar.pk %}">Подробнее</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}{% endblock %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'main/css/layout.css' %}">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="container">
+                <nav class="nav">
+                    <a href="{% url 'search' %}">
+                        <button class="custom-btn btn-9">Каталог</button>
+                    </a>
+                    <a href="{% url 'index' %}">
+                        <img class="menu_logo" src="{% static 'main/img/86573.jpg' %}" alt="logo">
+                    </a>
+                    <form class="search-form" action="{% url 'search' %}" method="GET">
+                        <label>
+                            <input type="text" placeholder="Поиск" class="search-input" name="q">
+                        </label>
+                        <button type="submit" class="search-button">
+                            <img src="{% static 'main/img/lupa.png' %}" alt="Поиск">
+                        </button>
+                    </form>
+                </nav>
+            </div>
+        </header>
+
+
+        <main>
+            {% block pagecontent %}
+            {% endblock %}
+
+        </main>
+
+
+        <footer class="footer">
+            <div class="container">
+                <nav class="nav">
+                    <div class="block1">
+                        <img class="footer_logo" src ='{% static 'main/img/86573.jpg' %}' alt="logo">
+                        <a href="https://creativemechanics.ru/?ysclid=lirlcvvzoc292791310">
+                            <img class="footer_sponsor-logo" src ='{% static 'main/img/creativmech.png' %}' alt="sponsor logo">
+                        </a>
+                        <a href="https://creativemechanics.ru/?ysclid=lirlcvvzoc292791310">
+                            <button class="btn-8">Перейти на сайт спонсора</button>
+                        </a>
+                    </div>
+                    <div class="footer_map">
+                        <div class="block2">
+                            <p>Заходите в гости</p>
+                            <p>г. Москва, ул. Намёткина</p>
+                            <p>17\68, кв.58, этаж 16</p>
+                        </div>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2250.584909973262!2d37.5586961!3d55.6614283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54cd788151daf%3A0xaf58b4abaf7f1c41!2z0YPQuy4g0J3QsNC80LXRgtC60LjQvdCwLCAxNy82OCwg0LrQsi41OCwg0Y3RgtCw0LYgMTYsINCc0L7RgdC60LLQsCwgMTE3NDIw!5e0!3m2!1sru!2sru!4v1678897850994!5m2!1sru!2sru" width="300" height="225" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+
+                    <div class="block3">
+                        <p>Контакты</p>
+                        <p>Почта: <a href="mailto:moskalenko.lab@gmail.com" style="color: #FFFAF4; text-decoration: underline;">moskalenko.lab@gmail.com</a></p>
+                        <p>WhatsApp: <a href="https://wa.me/+79169638902" style="color: #FFFAF4; text-decoration: underline;">+79169638902</a></p>
+                        <div class="social-icons">
+                            <a href="https://vk.com/dcrulit">
+                                <img src ='{% static 'main/img/vk.png' %}' alt="VK">
+                            </a>
+                            <a href="https://instagram.com/minionmechanic?igshid=NTc4MTIwNjQ2YQ==">
+                                <img src ='{% static 'main/img/instagram.png' %}' alt="instagram">
+                            </a>
+                            <a href="https://instagram.com/minionmechanic?igshid=NTc4MTIwNjQ2YQ==">
+                                <img src ='{% static 'main/img/facebook.png' %}' alt="facebook">
+                            </a>
+                            <a href="https://instagram.com/minionmechanic?igshid=NTc4MTIwNjQ2YQ==">
+                                <img src ='{% static 'main/img/telegram.png' %}' alt="telegram">
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
